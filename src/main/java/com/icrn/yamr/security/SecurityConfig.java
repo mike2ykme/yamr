@@ -24,6 +24,7 @@ public class SecurityConfig {
                 .authorizeExchange()
                 .pathMatchers("/users").access(this::isRob)
                 .pathMatchers("/login", "/signup", "/webjars/**").permitAll()
+//                .pathMatchers("/login", "/signup", "/webjars/**","/test/**").permitAll()
                 .anyExchange().authenticated()
                 .and()
                 .httpBasic().and()

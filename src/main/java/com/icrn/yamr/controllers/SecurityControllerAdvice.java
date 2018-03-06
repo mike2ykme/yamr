@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono;
  */
 @ControllerAdvice
 public class SecurityControllerAdvice {
-    @ModelAttribute
+    @ModelAttribute("csrf_token")
     Mono<CsrfToken> csrfToken(ServerWebExchange exchange) {
         Mono<CsrfToken> csrfToken = exchange.getAttribute(CsrfToken.class.getName());
         return csrfToken.doOnSuccess(token -> exchange.getAttributes()
