@@ -8,4 +8,5 @@ future if I'm trying to understand why I did something I'll be able to look back
 # Rob Winch's talk: https://youtu.be/EDO1zlyFq6I 
 #  his github repo: https://github.com/rwinch/spring-security5-reactive-parts﻿
 
-
+Article on REST API CSRF Security:
+# https://security.stackexchange.com/questions/166724/should-i-use-csrf-protection-on-rest-api-endpoints
