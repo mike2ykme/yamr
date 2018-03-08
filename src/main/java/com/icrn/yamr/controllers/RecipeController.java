@@ -1,8 +1,10 @@
 package com.icrn.yamr.controllers;
 
+import com.icrn.yamr.annotations.CurrentUser;
 import com.icrn.yamr.domain.Ingredient;
 import com.icrn.yamr.domain.Measurement;
 import com.icrn.yamr.domain.Recipe;
+import com.icrn.yamr.domain.User;
 import com.icrn.yamr.repositories.RecipeRepository;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -16,7 +18,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
-@CrossOrigin("*")
+//@CrossOrigin("*") //Don't know if I need this as sometimes it works without it
 @RestController
 @RequestMapping(path = "/recipes",produces = {APPLICATION_JSON_UTF8_VALUE })
 public class RecipeController {
@@ -46,7 +48,8 @@ public class RecipeController {
 
     }
     @PostMapping()
-    public Mono<Recipe> insertRecipe(@Valid @RequestBody Recipe recipe){
+    public Mono<Recipe> insertRecipe(@Valid @RequestBody Recipe recipe, @CurrentUser User user){
+        System.out.println(user.getEmail());
         return recipeRepository.save(recipe);
     }
 

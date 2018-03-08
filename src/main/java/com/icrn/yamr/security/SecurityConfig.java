@@ -11,6 +11,9 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authorization.AuthorizationContext;
+import org.springframework.web.reactive.config.CorsRegistry;
+import org.springframework.web.reactive.config.WebFluxConfigurer;
+import org.springframework.web.reactive.config.WebFluxConfigurerComposite;
 import reactor.core.publisher.Mono;
 
 
@@ -20,14 +23,15 @@ public class SecurityConfig {
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http
-//                .csrf().disable()
+                .csrf().disable()
                 .authorizeExchange()
                 .pathMatchers("/users").access(this::isRob)
-                .pathMatchers("/login", "/signup", "/webjars/**").permitAll()
-//                .pathMatchers("/login", "/signup", "/webjars/**","/test/**").permitAll()
+//                .pathMatchers("/login", "/signup", "/webjars/**","/getToken/**","/recipes/**").permitAll()
+                .pathMatchers("/**").permitAll()
                 .anyExchange().authenticated()
                 .and()
-                .httpBasic().and()
+                .httpBasic()
+                .and()
                 .formLogin()
 //                .loginPage("/login");
                 ;
@@ -52,4 +56,17 @@ public class SecurityConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 //        return NoOpPasswordEncoder.getInstance();
     }
+//    https://stackoverflow.com/questions/46978794/enable-cors-in-spring-5-webflux/47494858
+
+//    @Bean
+//    public WebFluxConfigurer corsConfigurer() {
+//        return new WebFluxConfigurerComposite() {
+//
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                registry.addMapping("/**").allowedOrigins("*")
+//                        .allowedMethods("*");
+//            }
+//        };
+//    }
 }

@@ -2,6 +2,7 @@ package com.icrn.yamr.controllers;
 
 import com.icrn.yamr.annotations.CurrentUser;
 import com.icrn.yamr.domain.User;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.web.reactive.result.view.CsrfRequestDataValueProcessor;
 import org.springframework.security.web.server.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,15 +16,19 @@ import reactor.core.publisher.Mono;
  */
 @ControllerAdvice
 public class SecurityControllerAdvice {
-    @ModelAttribute("csrf_token")
-    Mono<CsrfToken> csrfToken(ServerWebExchange exchange) {
-        Mono<CsrfToken> csrfToken = exchange.getAttribute(CsrfToken.class.getName());
-        return csrfToken.doOnSuccess(token -> exchange.getAttributes()
-                .put(CsrfRequestDataValueProcessor.DEFAULT_CSRF_ATTR_NAME, token));
-    }
+//    Removing CSRF Security b/c it's a rest API
+//    @ModelAttribute("csrf_token")
+//    Mono<CsrfToken> csrfToken(ServerWebExchange exchange) {
+//        Mono<CsrfToken> csrfToken = exchange.getAttribute(CsrfToken.class.getName());
+//        return csrfToken.doOnSuccess(token -> exchange.getAttributes()
+//                .put(CsrfRequestDataValueProcessor.DEFAULT_CSRF_ATTR_NAME, token));
+//    }
 
     @ModelAttribute("currentUser")
     User currentUser(@CurrentUser User currentUser) {
         return currentUser;
     }
+
+
+
 }
